@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR Machine Learning Project</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home_page.css') }}">
+</head>
+
+<body>
+    <!-- Background Video -->
+    <video class="background-video" autoplay muted loop>
+        <source src="{{ url_for('static', filename='Videos/3578236-hd_1920_1080_25fps.mp4') }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+
+    <!-- Existing content -->
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('about') }}">About</a>
+    </nav>
+
+
+    <!-- Scrolling Text -->
+    <div class="scrolling-text-container">
+        <div class="scrolling-text" id="scrollText">We are committed to providing the best OCR services.</div>
+        <div class="author-text">By Idont'Know</div>
+    </div>
+
+
+    <div class="floating-images">
+        <img src="{{ url_for('static', filename='Images/2ec0a7abf3e4a0399f335a4008435b2455e268b1_2_690x427.png') }}" alt="Image 1" class="img1">
+        <img src="{{ url_for('static', filename='Images/8a7645916907ee4e65c0f3c5cd9bd5e56bdf70a2.jpeg') }}" alt="Image 2" class="img2">
+        <img src="{{ url_for('static', filename='Images/2222.png') }}" alt="Image 3" class="img3">
+        <img src="{{ url_for('static', filename='Images/thresholding.webp') }}" alt="Image 4" class="img4">
+        <img src="{{ url_for('static', filename='Images/이미지 045.png') }}" alt="Image 5" class="img5">
+        <img src="{{ url_for('static', filename='Images/LV_AI_vignette.png') }}" alt="Image 6" class="img6">
+    </div>
+
+    <!-- Adding extra content to enable scrolling -->
+    <div style="height: 2000px;"></div>
+
+    <!-- Text Container -->
+    <div class="text-container">
+        <h1>Text To Image Transformer</h1>
+    </div>
+
+    <!-- Image Upload and Display Section -->
+    <div class="image-upload-container">
+        <div class="image-upload-box">
+            <input type="file" id="imageInput" accept="image/*">
+            <label for="imageInput">Click to Upload Image</label>
+        </div>
+        <div class="image-display-box">
+            <img id="uploadedImage" src="" alt="Selected Image">
+        </div>
+    </div>
+
+    <!-- Translated Text Container -->
+    <div class="translated-text-container">
+        <h2>Translated Image to Text Data</h2>
+        <div class="translated-text-content">
+            <!-- Display the translation result here -->
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/home_page.js') }}"></script>
+</body>
+</html>

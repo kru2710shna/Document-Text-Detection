@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OCR Machine Learning Project</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home_page.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
+
 </head>
 
 <body>
@@ -34,8 +36,6 @@
     <div class="floating-images">
         <img src="{{ url_for('static', filename='Images/2ec0a7abf3e4a0399f335a4008435b2455e268b1_2_690x427.png') }}" alt="Image 1" class="img1">
         <img src="{{ url_for('static', filename='Images/8a7645916907ee4e65c0f3c5cd9bd5e56bdf70a2.jpeg') }}" alt="Image 2" class="img2">
-        <img src="{{ url_for('static', filename='Images/2222.png') }}" alt="Image 3" class="img3">
-        <img src="{{ url_for('static', filename='Images/thresholding.webp') }}" alt="Image 4" class="img4">
         <img src="{{ url_for('static', filename='Images/이미지 045.png') }}" alt="Image 5" class="img5">
         <img src="{{ url_for('static', filename='Images/LV_AI_vignette.png') }}" alt="Image 6" class="img6">
     </div>
@@ -55,7 +55,7 @@
             <label for="imageInput">Click to Upload Image</label>
         </div>
         <div class="image-display-box">
-            <img id="uploadedImage" src="" alt="Selected Image">
+            <img id="uploadedImage" src="" alt="">
         </div>
     </div>
 

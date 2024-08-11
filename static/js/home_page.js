@@ -43,9 +43,9 @@ document.querySelectorAll('nav a, .scrolling-text, .author-text').forEach(elemen
     });
 });
 
-document.getElementById('imageUpload').addEventListener('change', function(event) {
+document.getElementById('imageInput').addEventListener('change', function(event) {
     const file = event.target.files[0];
-    const imgDisplay = document.getElementById('selectedImage');
+    const imgDisplay = document.getElementById('uploadedImage');
     
     if (file) {
         const reader = new FileReader();
@@ -63,3 +63,31 @@ document.getElementById('imageUpload').addEventListener('change', function(event
 function updateResult(resultText) {
     document.getElementById('resultText').innerText = resultText;
 }
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const colorThief = new ColorThief();
+
+    document.getElementById('imageInput').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const imgDisplay = document.getElementById('uploadedImage');
+        const imgDisplayBox = document.querySelector('.image-display-box');
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imgDisplay.src = e.target.result;
+                imgDisplay.style.display = 'block';
+
+                imgDisplay.onload = function() {
+                    // Ensure the image is fully loaded before using ColorThief
+                    if (imgDisplay.complete) {
+                        const dominantColor = colorThief.getColor(imgDisplay);
+                        imgDisplayBox.style.borderColor = `rgb(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]})`;
+                    }
+                };
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+});

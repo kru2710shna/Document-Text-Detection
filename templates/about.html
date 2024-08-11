@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Textify</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
+</head>
+<body>
+
+    <!-- Existing content -->
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('about') }}">About</a>
+    </nav>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+
+    <!-- Page Content -->
+    <div class="partition-container">
+        <!-- Left Side -->
+        <div class="left-side">
+            <video class="background-video" autoplay muted loop>
+                <source src="{{ url_for('static', filename='Videos/18069803-uhd_2160_3840_24fps.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            
+            <div class="floating-box">
+                <a href="https://www.linkedin.com/" target="_blank" class="floating-text-link">
+                    <span class="floating-text">Explore About Me</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Right Side -->
+        <div class="right-side">
+            <video class="background-video" autoplay muted loop>
+                <source src="{{ url_for('static', filename='Videos/18068806-uhd_3836_2160_24fps.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="floating-box">
+                <span class="floating-text" id="modelDetail">Model Detail</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>ARCHITECTURE: <strong><a href="{{ url_for('home') }}">TEXTIFY</a></strong></p>
+        <p>POWERED BY: <strong>IdontKnow</strong></p>
+        <p>DESIGNER: <strong>KRUSHNA THAKKAR</strong></p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/about.js') }}"></script>
+</body>
+</html>

@@ -66,6 +66,7 @@ nav a {
     overflow: hidden;
     pointer-events: none;
     z-index: 1000;
+    padding: 20px; /* Add padding if needed */
 }
 
 .scrolling-text {
@@ -97,7 +98,7 @@ nav a {
 
 .floating-images img {
     position: absolute;
-    width: 250px;
+    width: 200px; /* Reduced size to prevent overlap */
     height: auto;
     padding: 10px;
     border: 3px solid green;
@@ -127,26 +128,33 @@ nav a {
     left: 10%;
 }
 
-.img4 {
-    bottom: 10%;
-    right: 10%;
+
+.img5 {
+    top: 30%;
+    right: 30%;
 }
+
+.img6 {
+    bottom: 30%;
+    left: 30%;
+}
+
 /* Styling for Image Upload and Display Section */
 .image-upload-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    margin-top: 20px;
+    margin-top: 100px; /* Adjust to avoid overlap with floating images */
 }
 
 .image-upload-box {
-    width: 40%;
+    width: 45%;
     text-align: left;
 }
 
 .image-upload-box input[type="file"] {
-    display: none; /* Hide the actual file input */
+    display: none;
 }
 
 .image-upload-box label {
@@ -167,8 +175,8 @@ nav a {
 }
 
 .image-display-box {
-    width: 40%;
-    height: 300px; /* Adjust the height as needed */
+    width: 25%;
+    height: 300px;
     border: 2px solid green;
     display: flex;
     justify-content: center;
@@ -179,6 +187,7 @@ nav a {
 .image-display-box img {
     max-width: 100%;
     max-height: 100%;
+    object-fit: contain;
     object-fit: contain;
 }
 

@@ -25,33 +25,47 @@ document.addEventListener('mousemove', (e) => {
     });
 });
 
-// Scrolling text effect
+// Handle scroll effect for scrolling texts
 const scrollText = document.getElementById('scrollText');
+const scrollText2 = document.getElementById('scrollText2');
+
 window.addEventListener('scroll', () => {
     const scrollPos = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-    const translateX = scrollPos * -200 + 100; // Move text right to left
-    scrollText.style.transform = `translateX(${translateX}%)`;
-});
 
-// Highlight text on hover
-document.querySelectorAll('nav a, .scrolling-text, .author-text').forEach(element => {
-    element.addEventListener('mouseover', () => {
-        element.style.color = 'white';
-    });
-    element.addEventListener('mouseout', () => {
-        element.style.color = '#cccccc';
-    });
+    // Move .scrolling-text from left to right
+    const translateXText = scrollPos * 340 - 100; // Adjust values as needed
+    scrollText.style.transform = `translateX(${translateXText}%)`;
+
+    // Move .scrolling-text2 from right to left
+    const translateXText2 = -scrollPos * 250 + 100; // Adjust values as needed
+    scrollText2.style.transform = `translateX(${translateXText2}%)`;
 });
 
 document.getElementById('imageInput').addEventListener('change', function(event) {
     const file = event.target.files[0];
     const imgDisplay = document.getElementById('uploadedImage');
+    const imgDisplayBox = document.querySelector('.image-display-box');
     
     if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
             imgDisplay.src = e.target.result;
             imgDisplay.style.display = 'block';
+
+            imgDisplay.onload = function() {
+                const colorThief = new ColorThief();
+                const dominantColor = colorThief.getColor(imgDisplay);
+                imgDisplayBox.style.borderColor = `rgb(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]})`;
+                
+                // Adjust the display box size
+                if (imgDisplay.naturalWidth > imgDisplay.naturalHeight) {
+                    imgDisplayBox.style.width = '400px';
+                    imgDisplayBox.style.height = '250px';
+                } else {
+                    imgDisplayBox.style.width = '250px';
+                    imgDisplayBox.style.height = '400px';
+                }
+            };
         };
         reader.readAsDataURL(file);
     }
@@ -64,30 +78,24 @@ function updateResult(resultText) {
     document.getElementById('resultText').innerText = resultText;
 }
 
+document.getElementById('uploadForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
 
-document.addEventListener('DOMContentLoaded', () => {
-    const colorThief = new ColorThief();
+    const formData = new FormData(this);
 
-    document.getElementById('imageInput').addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        const imgDisplay = document.getElementById('uploadedImage');
-        const imgDisplayBox = document.querySelector('.image-display-box');
-        
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                imgDisplay.src = e.target.result;
-                imgDisplay.style.display = 'block';
-
-                imgDisplay.onload = function() {
-                    // Ensure the image is fully loaded before using ColorThief
-                    if (imgDisplay.complete) {
-                        const dominantColor = colorThief.getColor(imgDisplay);
-                        imgDisplayBox.style.borderColor = `rgb(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]})`;
-                    }
-                };
-            };
-            reader.readAsDataURL(file);
+    fetch('/upload-endpoint', { // Replace with your actual endpoint
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const imgDisplayBox = document.getElementById('imageDisplayBox');
+            imgDisplayBox.innerHTML = `<img src="${data.imageUrl}" alt="Uploaded Image">`;
+            document.getElementById('translatedTextContent').innerText = data.translatedText;
+        } else {
+            alert('Failed to process image');
         }
-    });
+    })
+    .catch(error => console.error('Error:', error));
 });

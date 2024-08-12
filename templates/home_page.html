@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OCR Machine Learning Project</title>
+    <title>Textify</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home_page.css') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
 
@@ -19,6 +19,10 @@
     <!-- Custom Cursor -->
     <div class="custom-cursor"></div>
 
+    <div class="header">
+        <h1>IdontKnow</h1>
+    </div>
+
     <!-- Existing content -->
     <nav>
         <a href="{{ url_for('home') }}">Home</a>
@@ -28,8 +32,8 @@
 
     <!-- Scrolling Text -->
     <div class="scrolling-text-container">
-        <div class="scrolling-text" id="scrollText">We are committed to providing the best OCR services.</div>
-        <div class="author-text">By Idont'Know</div>
+        <div class="scrolling-text" id="scrollText">Object Character Detection Deep Learning Algorithm</div>
+        <div class="scrolling-text2" id="scrollText2" style="margin-top: 30px;">We are committed to providing the best OCR services</div>
     </div>
 
 
@@ -38,32 +42,42 @@
         <img src="{{ url_for('static', filename='Images/8a7645916907ee4e65c0f3c5cd9bd5e56bdf70a2.jpeg') }}" alt="Image 2" class="img2">
         <img src="{{ url_for('static', filename='Images/이미지 045.png') }}" alt="Image 5" class="img5">
         <img src="{{ url_for('static', filename='Images/LV_AI_vignette.png') }}" alt="Image 6" class="img6">
+        <img src="{{ url_for('static', filename='Images/A4fnr.jpg') }}" alt="Image 7" class="img7">
+        <img src="{{ url_for('static', filename='Images/ae33a2580576dd4c1b0861120ed95eea.jpg') }}" alt="Image 8" class="img8">
+        <img src="{{ url_for('static', filename='Images/1572891745083.png') }}" alt="Image 9" class="img9">
+        <img src="{{ url_for('static', filename='Images/Di0yp.png') }}" alt="Image 10" class="img10">
+        <img src="{{ url_for('static', filename='Images/FtTV7.jpg') }}" alt="Image 11" class="img11">
+        <img src="{{ url_for('static', filename='Images/GAndt.png') }}" alt="Image 12" class="img12">
+       
+        
+        
     </div>
 
     <!-- Adding extra content to enable scrolling -->
     <div style="height: 2000px;"></div>
 
-    <!-- Text Container -->
-    <div class="text-container">
-        <h1>Text To Image Transformer</h1>
-    </div>
 
-    <!-- Image Upload and Display Section -->
-    <div class="image-upload-container">
-        <div class="image-upload-box">
-            <input type="file" id="imageInput" accept="image/*">
-            <label for="imageInput">Click to Upload Image</label>
+    <!-- Form to handle image upload and submit -->
+    <form id="uploadForm" action="/" method="POST" enctype="multipart/form-data">
+        <div class="image-upload-container">
+            <div class="image-upload-section">
+                <div class="image-upload-box">
+                    <input type="file" id="imageInput" name="image" accept="image/*">
+                    <label for="imageInput">Click to Upload Image</label>
+                </div>
+                <button type="submit">Submit</button>
+            </div>
+            <div class="image-display-box" id="imageDisplayBox">
+                <img id="uploadedImage" style="display:none;">
+            </div>
         </div>
-        <div class="image-display-box">
-            <img id="uploadedImage" src="" alt="">
-        </div>
-    </div>
+    </form>
 
     <!-- Translated Text Container -->
     <div class="translated-text-container">
-        <h2>Translated Image to Text Data</h2>
-        <div class="translated-text-content">
-            <!-- Display the translation result here -->
+        <h4>Image To Text Transformer:</h4>
+        <div class="translated-text-content" id="translatedTextContent">
+            <!-- Translated text will appear here -->
         </div>
     </div>
 

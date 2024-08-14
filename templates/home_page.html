@@ -12,7 +12,7 @@
 <body>
     <!-- Background Video -->
     <video class="background-video" autoplay muted loop>
-        <source src="{{ url_for('static', filename='Videos/3578236-hd_1920_1080_25fps.mp4') }}" type="video/mp4">
+        <source src="https://storage.cloud.google.com/staging.textify-432321.appspot.com/2dd7304992495fa89b8051b6ab2df437ada0f425" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 
@@ -40,7 +40,7 @@
     <div class="floating-images">
         <img src="{{ url_for('static', filename='Images/2ec0a7abf3e4a0399f335a4008435b2455e268b1_2_690x427.png') }}" alt="Image 1" class="img1">
         <img src="{{ url_for('static', filename='Images/8a7645916907ee4e65c0f3c5cd9bd5e56bdf70a2.jpeg') }}" alt="Image 2" class="img2">
-        <img src="{{ url_for('static', filename='Images/이미지 045.png') }}" alt="Image 5" class="img5">
+        <img src="{{ url_for('static', filename='Images/ae33a2580576dd4c1b0861120ed95eea.jpg') }}" alt="Image 5" class="img5">
         <img src="{{ url_for('static', filename='Images/LV_AI_vignette.png') }}" alt="Image 6" class="img6">
         <img src="{{ url_for('static', filename='Images/A4fnr.jpg') }}" alt="Image 7" class="img7">
         <img src="{{ url_for('static', filename='Images/ae33a2580576dd4c1b0861120ed95eea.jpg') }}" alt="Image 8" class="img8">
@@ -48,8 +48,6 @@
         <img src="{{ url_for('static', filename='Images/Di0yp.png') }}" alt="Image 10" class="img10">
         <img src="{{ url_for('static', filename='Images/FtTV7.jpg') }}" alt="Image 11" class="img11">
         <img src="{{ url_for('static', filename='Images/GAndt.png') }}" alt="Image 12" class="img12">
-       
-        
         
     </div>
 
@@ -68,18 +66,28 @@
                 <button type="submit">Submit</button>
             </div>
             <div class="image-display-box" id="imageDisplayBox">
-                <img id="uploadedImage" style="display:none;">
+                {% if image_url %}
+                    <img id="uploadedImage" src="{{ image_url }}" alt="Uploaded Image">
+                {% endif %}
             </div>
         </div>
     </form>
 
-    <!-- Translated Text Container -->
+   <!-- Translated Text Container -->
     <div class="translated-text-container">
         <h4>Image To Text Transformer:</h4>
         <div class="translated-text-content" id="translatedTextContent">
-            <!-- Translated text will appear here -->
+            <!-- Display the extracted text here -->
+            {{ extracted_text }}
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>ARCHITECTURE: <strong><a href="{{ url_for('home') }}">TEXTIFY</a></strong></p>
+        <p>POWERED BY: <strong>IdontKnow</strong></p>
+        <p>DESIGNER: <strong>KRUSHNA THAKKAR</strong></p>
+    </footer>
 
     <script src="{{ url_for('static', filename='js/home_page.js') }}"></script>
 </body>

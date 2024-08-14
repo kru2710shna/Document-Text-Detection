@@ -41,61 +41,41 @@ window.addEventListener('scroll', () => {
     scrollText2.style.transform = `translateX(${translateXText2}%)`;
 });
 
-document.getElementById('imageInput').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    const imgDisplay = document.getElementById('uploadedImage');
-    const imgDisplayBox = document.querySelector('.image-display-box');
-    
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            imgDisplay.src = e.target.result;
-            imgDisplay.style.display = 'block';
+document.addEventListener('DOMContentLoaded', function() {
+    const imageInput = document.getElementById('imageInput');
 
-            imgDisplay.onload = function() {
-                const colorThief = new ColorThief();
-                const dominantColor = colorThief.getColor(imgDisplay);
-                imgDisplayBox.style.borderColor = `rgb(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]})`;
-                
-                // Adjust the display box size
-                if (imgDisplay.naturalWidth > imgDisplay.naturalHeight) {
-                    imgDisplayBox.style.width = '400px';
-                    imgDisplayBox.style.height = '250px';
-                } else {
-                    imgDisplayBox.style.width = '250px';
-                    imgDisplayBox.style.height = '400px';
-                }
-            };
-        };
-        reader.readAsDataURL(file);
+    if (!imageInput) {
+        console.error("Image input element not found.");
+        return;
     }
-});
 
+    imageInput.addEventListener('change', function(event) {
+        handleImageUpload(event);
+    });
 
-// You may also add JavaScript to process the uploaded image and get the OCR results
-// Once you have the OCR result, update the result container
-function updateResult(resultText) {
-    document.getElementById('resultText').innerText = resultText;
-}
-
-document.getElementById('uploadForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent default form submission
-
-    const formData = new FormData(this);
-
-    fetch('/upload-endpoint', { // Replace with your actual endpoint
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            const imgDisplayBox = document.getElementById('imageDisplayBox');
-            imgDisplayBox.innerHTML = `<img src="${data.imageUrl}" alt="Uploaded Image">`;
-            document.getElementById('translatedTextContent').innerText = data.translatedText;
+    function handleImageUpload(event) {
+        const file = event.target.files[0];
+    
+        if (file) {
+            const formData = new FormData();
+            formData.append('image', file);
+    
+            // Display the selected image in the image-display-box
+            const imageDisplayBox = document.getElementById('imageDisplayBox');
+            const imgElement = document.createElement('img');
+            imgElement.src = URL.createObjectURL(file);
+            imgElement.alt = "Uploaded Image";
+            imgElement.id = "uploadedImage";
+            imgElement.style.maxWidth = "100%";
+            imgElement.style.maxHeight = "300px";
+            imageDisplayBox.innerHTML = '';  // Clear previous image if any
+            imageDisplayBox.appendChild(imgElement);
+    
+            // Assuming you are doing something with the image
+            // Send this formData via AJAX if necessary, for now, this is just a placeholder.
+            console.log("Image ready to be sent for OCR processing.");
         } else {
-            alert('Failed to process image');
+            console.error("No file selected.");
         }
-    })
-    .catch(error => console.error('Error:', error));
+    }
 });

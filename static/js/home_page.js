@@ -43,9 +43,11 @@ window.addEventListener('scroll', () => {
 
 document.addEventListener('DOMContentLoaded', function() {
     const imageInput = document.getElementById('imageInput');
+    const newImageButton = document.getElementById('newImageButton');
+    const translatedTextContent = document.getElementById('translatedTextContent');
 
-    if (!imageInput) {
-        console.error("Image input element not found.");
+    if (!imageInput || !newImageButton || !translatedTextContent) {
+        console.error("Required elements not found.");
         return;
     }
 
@@ -58,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
         if (file) {
             const formData = new FormData();
-            formData.append('image', file);
+            formData.append('file', file);
     
             // Display the selected image in the image-display-box
             const imageDisplayBox = document.getElementById('imageDisplayBox');
@@ -71,11 +73,21 @@ document.addEventListener('DOMContentLoaded', function() {
             imageDisplayBox.innerHTML = '';  // Clear previous image if any
             imageDisplayBox.appendChild(imgElement);
     
-            // Assuming you are doing something with the image
-            // Send this formData via AJAX if necessary, for now, this is just a placeholder.
             console.log("Image ready to be sent for OCR processing.");
         } else {
             console.error("No file selected.");
         }
     }
+
+    newImageButton.addEventListener('click', function() {
+        // Clear the extracted text content
+        translatedTextContent.innerHTML = '';
+
+        // Clear the uploaded image
+        const imageDisplayBox = document.getElementById('imageDisplayBox');
+        imageDisplayBox.innerHTML = '';
+
+        // Reload the page to start a new session
+        window.location.reload();
+    });
 });

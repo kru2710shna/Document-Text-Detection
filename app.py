@@ -1,59 +1,56 @@
-from flask import Flask, render_template, redirect, request, url_for, flash, send_from_directory
+from flask import Flask, render_template, request, redirect, url_for, flash , send_from_directory
 from PIL import Image
 import pytesseract
-from io import BytesIO
 import os
-from dotenv import load_dotenv
 
 app = Flask(__name__)
-load_dotenv()
+app.secret_key = 'your_secret_key'  # Change this to a real secret key
 
-app.config['UPLOAD_FOLDER'] = 'static/uploads'
-app.secret_key = os.getenv('SECRET_KEY', 'default_secret_key')
+# Ensure the upload folder exists
+UPLOAD_FOLDER = 'static/uploads'
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
 
-if not os.path.exists(app.config['UPLOAD_FOLDER']):
-    os.makedirs(app.config['UPLOAD_FOLDER'])
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def home():
-    extracted_text = None
-    image_url = None
+    return render_template('home_page.html')
 
-    if request.method == 'POST':
-        file = request.files.get('image')
-        if not file:
-            flash('No file part. Please upload an image.')
-            return redirect(request.url)
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
-        if file.filename == '':
-            flash('No selected file. Please select an image to upload.')
-            return redirect(request.url)
+@app.route('/', methods=['POST'])
+def upload_image():
+    if 'file' not in request.files:
+        flash('No file part.')
+        return redirect(request.url)
 
-        if not file.filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp')):
-            flash('Invalid image file format. Please upload a valid image.')
-            return redirect(request.url)
+    file = request.files['file']
 
+    if file.filename == '':
+        flash('No selected file.')
+        return redirect(request.url)
+
+    if file:
+        # Save the uploaded image
+        image_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+        file.save(image_path)
+        
         try:
-            # Open image file using BytesIO
-            image = Image.open(BytesIO(file.read()))
-            extracted_text = perform_OCR(image)
-            
-            # Save the image
-            image_filename = file.filename
-            image.save(os.path.join(app.config['UPLOAD_FOLDER'], image_filename))
-            image_url = url_for('uploaded_file', filename=image_filename)
-            
+            # Perform OCR using Tesseract
+            extracted_text = perform_ocr(image_path)
+            return render_template('home_page.html', extracted_text=extracted_text, image_path=url_for('uploaded_file', filename=file.filename))
         except Exception as e:
-            flash(f'An error occurred while processing the file: {e}')
-            print(f"Error: {e}")
+            flash(f'An error occurred: {e}')
             return redirect(request.url)
 
-    print(f"Image URL: {image_url}")  # For debugging
-
-    return render_template('home_page.html', extracted_text=extracted_text, image_url=image_url)
-
-def perform_OCR(image):
+def perform_ocr(image_path):
     try:
+        # Open the image using Pillow
+        image = Image.open(image_path)
+        # Perform OCR using pytesseract
         extracted_text = pytesseract.image_to_string(image)
     except Exception as e:
         extracted_text = f"Error processing image: {e}"
@@ -62,10 +59,6 @@ def perform_OCR(image):
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
-@app.route('/about')
-def about():
-    return render_template('about.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

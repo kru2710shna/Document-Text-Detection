@@ -60,16 +60,15 @@
         <div class="image-upload-container">
             <div class="image-upload-section">
                 <div class="image-upload-box">
-                    <input type="file" id="imageInput" name="image" accept="image/*">
+                    <input type="file" id="imageInput" name="file" accept="image/*">
                     <label for="imageInput">Click to Upload Image</label>
                 </div>
                 <button type="submit">Submit</button>
             </div>
             <div class="image-display-box" id="imageDisplayBox">
-                {% if image_url %}
-                    <img id="uploadedImage" src="{{ image_url }}" alt="Uploaded Image">
-                {% endif %}
+                <img id="uploadedImage" src="{{ image_url }}">
             </div>
+            <button type="button" id="newImageButton">Upload New Image</button>
         </div>
     </form>
 
@@ -78,9 +77,12 @@
         <h4>Image To Text Transformer:</h4>
         <div class="translated-text-content" id="translatedTextContent">
             <!-- Display the extracted text here -->
-            {{ extracted_text }}
+            {% if extracted_text %}
+                {{ extracted_text }}
+            {% endif %}
         </div>
     </div>
+
 
     <!-- Footer -->
     <footer>

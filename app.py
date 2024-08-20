@@ -2,9 +2,12 @@ from flask import Flask, render_template, request, redirect, url_for, flash , se
 from PIL import Image
 import pytesseract
 import os
+from dotenv import load_dotenv
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Change this to a real secret key
+load_dotenv()
+app.secret_key = os.getenv('SECRET_KEY' )
+pytesseract.pytesseract.tesseract_cmd = os.getenv('TESSERACT_CMD')
 
 # Ensure the upload folder exists
 UPLOAD_FOLDER = 'static/uploads'

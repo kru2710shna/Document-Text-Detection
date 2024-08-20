@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 app = Flask(__name__)
 load_dotenv()
 app.secret_key = os.getenv('SECRET_KEY')
-pytesseract.pytesseract.tesseract_cmd = '/opt/homebrew/bin/tesseract'
+pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'
 
 # Ensure the upload folder exists
 UPLOAD_FOLDER = 'static/uploads'

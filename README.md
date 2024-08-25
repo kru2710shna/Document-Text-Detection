@@ -38,10 +38,6 @@ The **Document-Text-Detection** project is a sophisticated application designed 
 4. **Model Evaluation**: Assessed model performance using appropriate metrics to ensure high accuracy.
 5. **Deployment**: The model was deployed on Google Cloud Platform using Flask for the backend and Gunicorn as the WSGI server.
 
-### Website
-
-Access the live website here: [Document-Text-Detection](https://textify-7mkd.onrender.com)
-
 ### Features
 
 - **User Privacy Protection**: Ensures that all shared images and documents remain confidential and are not stored permanently.
@@ -51,15 +47,6 @@ Access the live website here: [Document-Text-Detection](https://textify-7mkd.onr
   - **Gunicorn**: WSGI server for running Flask applications.
   - **Tesseract**: OCR tool used for text detection.
   - **OpenCV & Pillow**: Used for image processing tasks.
-
-### Upcoming Version: 0.1.0
-
-Expected release by the end of the month with the following enhancements:
-
-- **Pattern Matching**: Improved text detection with pattern recognition.
-- **Intelligent Character & Word Recognition**: Enhanced accuracy in recognizing characters and words from complex images.
-- **User Management**: Integration of session management, user login, and logout functionality.
-- **Backend Updates**: Optimizations for better performance and security.
 
 ### Installation
 

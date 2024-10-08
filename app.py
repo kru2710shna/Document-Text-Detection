@@ -9,6 +9,7 @@ load_dotenv()
 app.secret_key = os.getenv('SECRET_KEY')
 pytesseract.pytesseract.tesseract_cmd = '/opt/homebrew/bin/tesseract'
 
+
 # Ensure the upload folder exists
 UPLOAD_FOLDER = 'static/uploads'
 if not os.path.exists(UPLOAD_FOLDER):
@@ -19,6 +20,11 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 @app.route('/')
 def home():
     return render_template('home_page.html')
+
+@app.route('/health')
+def health_check():
+    return "App is running!", 200
+
 
 @app.route('/about')
 def about():
@@ -44,7 +50,10 @@ def upload_image():
         try:
             # Perform OCR using Tesseract
             extracted_text = perform_ocr(image_path)
+            
+            # Pass both the extracted text and the image URL to the template
             return render_template('home_page.html', extracted_text=extracted_text, image_path=url_for('uploaded_file', filename=file.filename))
+        
         except Exception as e:
             flash(f'An error occurred: {e}')
             return redirect(request.url)

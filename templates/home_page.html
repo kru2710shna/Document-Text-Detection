@@ -67,6 +67,8 @@
             </div>
             <div class="image-display-box" id="imageDisplayBox">
                 <img id="uploadedImage" src="{{ image_url }}">
+                <img id="uploadedImage" src="{{ image_path }}">
+                
             </div>
             <button type="button" id="newImageButton">Upload New Image</button>
         </div>
@@ -78,7 +80,9 @@
         <div class="translated-text-content" id="translatedTextContent">
             <!-- Display the extracted text here -->
             {% if extracted_text %}
-                {{ extracted_text }}
+                <p>{{ extracted_text }}</p>
+            {% else %}
+                <p>No text extracted. Please upload an image.</p>
             {% endif %}
         </div>
     </div>
